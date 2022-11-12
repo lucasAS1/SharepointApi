@@ -40,31 +40,29 @@ public class SharepointAgent : ISharepointAgent
     {
         var clientContext = await GetClientContextAsync();
 
-        clientContext.Load(
-            clientContext.Web.Lists
-        );
-        
-        await clientContext.ExecuteQueryAsync();
+        await LoadClientContext(clientContext, clientContext.Web.Lists);
 
         var listItems = clientContext.Web.Lists
             .FirstOrDefault(x => x.Id.ToString() == _apiSettingsOptions.Value.SharepointCredentials.ListId)?
             .GetItems(CamlQuery.CreateAllItemsQuery());
-        
-        clientContext.Load(listItems);
-        await clientContext.ExecuteQueryAsync();
+
+        await LoadClientContext(clientContext, listItems!);
 
         var item = listItems?.Where(x => x.Id == int.Parse(fileId)).FirstOrDefault();
         
-        clientContext.Load(item!.AttachmentFiles);
-        await clientContext.ExecuteQueryAsync();
+        await LoadClientContext(clientContext, item!.AttachmentFiles);
         
         var attachment = clientContext.Web.GetFileByServerRelativeUrl(item.AttachmentFiles.FirstOrDefault()!.ServerRelativeUrl);
         var fileStream = attachment.OpenBinaryStream();
-
-        clientContext.Load(attachment);
-        await clientContext.ExecuteQueryAsync();
-
         
+        await LoadClientContext(clientContext, attachment);
+
         return fileStream.Value;
+    }
+
+    private async Task LoadClientContext(ClientContext clientContext, ClientObject itemToBeLoaded)
+    {
+        clientContext.Load(itemToBeLoaded);
+        await clientContext.ExecuteQueryAsync();
     }
 }
