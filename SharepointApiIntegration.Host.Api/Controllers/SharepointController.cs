@@ -16,10 +16,10 @@ public class SharepointController : ControllerBase
 
     [HttpGet]
     [Route("GetSharepointSiteLists")]
-    public async Task<IActionResult> GetSharepointSiteLists()
+    public async Task<IActionResult> GetSharepointSiteLists([FromQuery]string fileId)
     {
-        var lists = await _sharepointAgent.GetFileAttachmentAsync("1");
+        var file = await _sharepointAgent.GetFileAttachmentAsync(fileId);
 
-        return Ok(new ByteArrayContent(lists));
+        return File(file, "application/octet-stream",fileDownloadName:"downloadedFile.pdf");
     }
 }

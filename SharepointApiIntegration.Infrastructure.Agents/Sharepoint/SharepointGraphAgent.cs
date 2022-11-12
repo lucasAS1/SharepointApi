@@ -45,7 +45,7 @@ public class SharepointGraphAgent : ISharepointAgent
         throw new NotImplementedException();
     }
 
-    public async Task<byte[]> GetFileAttachmentAsync(string fileId)
+    public async Task<Stream> GetFileAttachmentAsync(string fileId)
     {
         var graphClient = new GraphServiceClient(new DelegateAuthenticationProvider(async request =>
         {
@@ -61,7 +61,7 @@ public class SharepointGraphAgent : ISharepointAgent
             .Expand("fields, driveItem")
             .GetAsync();
 
-        var files = new List<byte[]>();
+        var files = new List<Stream>();
         
         foreach (var listItem in listItemCollectionResponse.CurrentPage)
         {
@@ -71,11 +71,11 @@ public class SharepointGraphAgent : ISharepointAgent
                 .ExecuteAsync(() =>
                     listItem.DriveItem.AdditionalData.First().Value.ToString()
                         .GetAsync()
-                ).ReceiveBytes();
+                ).ReceiveStream();
             
             files.Add(downloadedFile);
         }
-        
+
         return files.FirstOrDefault();
     }
 }

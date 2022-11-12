@@ -19,6 +19,9 @@
       <PackageReference Include="Microsoft.Graph" Version="4.34.0" />
       <PackageReference Include="Microsoft.Graph.Auth" Version="1.0.0-preview.7" />
       <PackageReference Include="Microsoft.Identity.Client" Version="4.44.0" />
+      <PackageReference Include="Microsoft.SharePoint.Client" Version="14.0.4762.1000" />
+      <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.23019.12000" />
+      <PackageReference Include="PnP.Framework" Version="1.11.3-nightly" />
       <PackageReference Include="Polly" Version="7.2.3" />
     </ItemGroup>
 
