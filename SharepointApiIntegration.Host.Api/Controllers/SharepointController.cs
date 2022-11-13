@@ -15,7 +15,16 @@ public class SharepointController : ControllerBase
     }
 
     [HttpGet]
-    [Route("GetSharepointSiteLists")]
+    [Route("GetSharepointItems")]
+    public async Task<IActionResult> GetSharepointSiteLists()
+    {
+        var itemsResponse = await _sharepointAgent.GetListItemsResponse();
+
+        return Ok(itemsResponse);
+    }
+    
+    [HttpGet]
+    [Route("GetSharepointFileById")]
     public async Task<IActionResult> GetSharepointSiteLists([FromQuery]string fileId)
     {
         var file = await _sharepointAgent.GetFileAttachmentAsync(fileId);

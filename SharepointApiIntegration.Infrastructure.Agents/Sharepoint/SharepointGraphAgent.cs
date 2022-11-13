@@ -4,7 +4,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.Graph;
 using Polly;
 using SharepointApiIIntegration.Domain.Interfaces.Agents;
+using SharepointApiIIntegration.Domain.Model.Responses;
 using SharepointApiIIntegration.Domain.Model.Settings;
+using SharepointApiIIntegration.Domain.Model.Sharepoint;
 
 namespace SharepointApiIntegration.Infrastructure.GraphService.Sharepoint;
 
@@ -77,5 +79,10 @@ public class SharepointGraphAgent : ISharepointAgent
         }
 
         return files.FirstOrDefault();
+    }
+
+    public async Task<List<GetListItemsResponse>> GetListItemsResponse()
+    {
+        throw new NotImplementedException();
     }
 }

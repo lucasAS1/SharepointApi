@@ -16,4 +16,8 @@
       <PackageReference Include="Flurl.Http" Version="4.0.0-pre1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SharepointApiIIntegration.Domain.Model\SharepointApiIIntegration.Domain.Model.csproj" />
+    </ItemGroup>
+
 </Project>
